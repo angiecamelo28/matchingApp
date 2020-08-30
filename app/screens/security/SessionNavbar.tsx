@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, Alert, Button, AsyncStorage } from "react-native";
+import { StyleSheet, Text, Alert, Button, AsyncStorage, VirtualizedList, View, Dimensions } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default class SessionNavbar extends React.Component {
   constructor(props) {
@@ -18,15 +19,15 @@ export default class SessionNavbar extends React.Component {
     if (session) {
       this.setState({
         isLoggedIn: true,
-        name: JSON.parse(session).data.username,
+        name: JSON.parse(session).data.correo,
       });
     }
   }
 
   signOut = () => {
-    Alert.alert("Sign out", "Do you want to sign out?", [
+    Alert.alert("Cerrar sesión.", "¿Deseas cerrar la sesión?", [
       {
-        text: "Yes",
+        text: "Sí.",
         onPress: () => {
           AsyncStorage.removeItem("session");
           this.setState({
@@ -36,30 +37,51 @@ export default class SessionNavbar extends React.Component {
         },
       },
       {
-        text: "No",
+        text: "No.",
       },
     ]);
   };
 
   render() {
     if (this.state.isLoggedIn) {
-      return <Text onPress={this.signOut}>In session {this.state.name}</Text>;
-    } else {
+      return <Text onPress={this.signOut}>Bienvenido, {this.state.name}</Text>;
+    } 
+    
+    else {
       return (
-        <Button
-          title="Go to Login"
-          onPress={() => this.props.navigation.push("Login")}
+        <View style={styles.container}>
+          <View style={styles.buttonView}>
+          <Button
+          color="#760893"
+          title="Regístrate"
+          onPress={() => this.props.navigation.push("Registrate")}
         />
+        </View>
+        <View style={styles.buttonView}>
+        <Button 
+          color="#760893"
+          title="Conéctate"
+          onPress={() => this.props.navigation.push("Iniciar sesión")}
+        />
+        </View>
+        </View>
+        
       );
     }
   }
 }
 
 const styles = StyleSheet.create({
-  loginView: {
-    flex: 1,
+ 
+  
+
+  buttonView: {
+    padding: 10,
+  },
+  container: {
+    flex:0.5,
+    flexDirection: "row",
     alignItems: "center",
-    marginBottom: 50,
-    zIndex: 1,
+    alignContent: "center",
   },
 });
