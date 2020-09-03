@@ -58,6 +58,8 @@ export default class Login extends React.Component {
       .catch((err) => {
         Alert.alert("Advertencia", "Datos inválidos.");
       });
+      
+      
   }
 
   render() {
@@ -93,7 +95,6 @@ export default class Login extends React.Component {
             
           </TouchableOpacity>
           <Text style ={{color:"#FFFCB8",fontSize: 17,  borderColor: "black"}}onPress={() => this.props.navigation.push("Registrate")}> ¡Registrate ahora! </Text>
-          <Text style={{color:"#FFFCB8", fontSize:17,textAlign:"right",borderColor: "black"}}onPress={() => this.props.navigation.push("Iniciar sesión")}> ¿Olvidaste tu contraseña? </Text>
         </SafeAreaView>
       </ImageBackground>
     );

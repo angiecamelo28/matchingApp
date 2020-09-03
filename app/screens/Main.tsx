@@ -3,6 +3,8 @@ import React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ActivityIndicator, Colors, Card, BottomNavigation, Banner } from 'react-native-paper';
+import { Platform } from 'react-native';
 import {
   StyleSheet,
   Text,
@@ -25,7 +27,7 @@ export default class Main extends React.Component {
 
 
     this.state = {
-      isLoggedIn: false,
+      
       loading: false,
       perfiles: [],
       url:
@@ -58,18 +60,24 @@ export default class Main extends React.Component {
     if (this.state.loading) {
       return (
         <View style={styles.dataViewLoading}>
-          <Text>Cargando perfiles... por favor espere.</Text>
+          <Text>{"\n"}</Text>
+          <Text style={{fontSize: 20, color: "#760893",fontWeight: 'bold'}}>Cargando perfiles... </Text>
+          <Text style={{fontSize: 20, color: "#760893",fontWeight: 'bold'}}>Por favor espere.</Text>
+          <ActivityIndicator style={styles.cargando} animating={true} color={"#760893"} size={'large'} />
         </View>
       );
       
     } 
     
+    
     else {
       return (
         <ImageBackground source={bgImg} style={styles.backgroundApp}>
-        <View style={styles.perfilesView}>
+          
           <SessionNavbar navigation={navigation}></SessionNavbar>
-          <Text style={{ color: "#760893",   fontWeight: 'bold', fontSize: 27}}>DESCUBRIR</Text>
+        <View style={styles.perfilesView}>
+        <Text>{"\n"}</Text>
+        <Text style={{ color: "#760893",   fontWeight: 'bold', fontSize: 42}}>Descubrir</Text>
           
           <FlatList
             style={styles.flatList}
@@ -118,7 +126,6 @@ const styles = StyleSheet.create({
     margin: 30,
     alignItems: "center",
     justifyContent: "center",
-    color: "black",
     backgroundColor: "white",
     width: 190,
     height: 270,
@@ -134,9 +141,16 @@ const styles = StyleSheet.create({
     flex: 1
   },
   dataViewLoading: {
+    backgroundColor: "white",
     alignItems: "center",
     alignContent: "center",
     flex: 1,
+    
+  },
+  HomeView: {
+    alignItems: "center",
+    alignContent: "center",
+    flex: 1
   },
   button: {
     alignSelf: "center",
@@ -166,4 +180,18 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: "center",
 },
+  cargando: {
+    margin: 150,
+    alignItems: "center",
+    justifyContent: "center"
+
+  },
+  scroll:{
+    backgroundColor:"white",
+    marginStart:20,
+    marginEnd:15,
+    marginVertical:12,
+    alignContent: "center",
+    alignSelf: "center",
+  },
 });

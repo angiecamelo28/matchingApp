@@ -14,6 +14,7 @@ import {
   Picker,
   CheckBox,
   Dimensions,
+  View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -33,9 +34,9 @@ export default class Register extends React.Component {
       estadoCivil: "",
       orientacionSexual: "",
       ocupacion:"",
-      hijos:"",
-      fumador:"",
-      bebedor:"",
+      hijos:false,
+      fumador:false,
+      bebedor:false,
       intereses:"",
       paisId:"",
       ciudadId:"",
@@ -44,7 +45,7 @@ export default class Register extends React.Component {
     
     async onRegister() {
       const n = this.state.nombre;
-      const u = this.state.correo;
+      const c = this.state.correo;
       const p = this.state.phone;
       const s = this.state.sexo;
       const f = this.state.fechaNacimiento;
@@ -66,13 +67,13 @@ export default class Register extends React.Component {
         },
         body: JSON.stringify({
           nombre: n,
-          correo: u,
+          correo: c,
           phone: p,
-          sexo: s,
+          sexo: "Masculino",
           fechaNacimiento: f,
           nivelEscolaridad: ne,
-          estadoCivil: ec,
-          orientacionSexual: os,
+          estadoCivil: "Soltero",
+          orientacionSexual: "Heterosexual",
           ocupacion:o,
           hijos: h,
           fumador: fm,
@@ -84,6 +85,7 @@ export default class Register extends React.Component {
         .then((data) => data.json())
         .then((data) => {
           if (data.error) {
+            console.log(data);
             Alert.alert("Advertencia", "Datos inválidos.");
           } else {
             this.state.nombre = "";
@@ -95,31 +97,35 @@ export default class Register extends React.Component {
             this.state.estadoCivil = "";
             this.state.orientacionSexual = "";
             this.state.ocupacion = "";
-            this.state.hijos = "";
-            this.state.fumador = "";
-            this.state.bebedor = "";
+            this.state.hijos = false;
+            this.state.fumador = false;
+            this.state.bebedor = false;
             this.state.intereses = "";
             this.state.paisId = "";
             this.state.ciudadId = "";
             AsyncStorage.setItem("session", JSON.stringify(data));
+            Alert.alert("Bienvenido/a a Matching", "Bienvenido a nuestra comunidad, esperamos que encuentres todo lo que buscas. ¡A disfrutar!.");
+        
             this.props.navigation.push("Iniciar sesión");
+            Alert.alert("Credentials", `correo: ${c} - nombre: ${n}`);
           }
         })
   
         .catch((err) => {
+          console.log(err);
           Alert.alert("Advertencia", "Datos inválidos.");
-        });
+          });
     }
   
     render() {
       const { navigation } = this.props;
       return (
-        <ScrollView> 
+        
         <ImageBackground source={bgImg} style={styles.backgroundApp}>
           <SafeAreaView style={styles.container}>
             <Text style={styles.titleText}>Registrate</Text>
             <Text style={{ color:"white",fontSize: 18 }}>Por favor, introduce los datos requeridos correctamente.{"\n"}</Text>
-        
+            <ScrollView> 
             <TextInput
               value={this.state.nombre}
               keyboardType="default"
@@ -170,7 +176,6 @@ export default class Register extends React.Component {
                     <Picker.Item label="Educación Media" value="Educación Media" />  
                     <Picker.Item label="Educación Superior" value="Educación Superior" />  
             </Picker>  
-            <Text>{"\n"}</Text>
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.estadoCivil}  
                         onValueChange={(itemValue, itemPosition) =>  
@@ -183,7 +188,6 @@ export default class Register extends React.Component {
                     <Picker.Item label="Viudo" value="Viudo" /> 
                     
             </Picker>  
-            <Text>{"\n"}</Text>
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.orientacionSexual}  
                         onValueChange={(itemValue, itemPosition) =>  
@@ -202,20 +206,70 @@ export default class Register extends React.Component {
               placeholderTextColor="gray"
               style={styles.input}
             />
-            
-              
+             
+            <Picker style={styles.pickerStyle}  
+                        selectedValue={this.state.paisId}  
+                        onValueChange={(itemValue, itemPosition) =>  
+                            this.setState({paisId: itemValue, choosenIndex: itemPosition})}  
+                    >  
+                    <Picker.Item label="Colombia" value="5f2d9fb7271b3c1e88ba50f4" />  
+                    <Picker.Item label="México" value="5f2f76f2c145453a883eee7b" />  
+                    <Picker.Item label="Bolivia" value="5f2c869d7d918327a03f215b" />  
+            </Picker> 
 
-            <Text>{"\n"}</Text>
+            <Picker style={styles.pickerStyle}  
+                        selectedValue={this.state.ciudadId}  
+                        onValueChange={(itemValue, itemPosition) =>  
+                            this.setState({ciudadId: itemValue, choosenIndex: itemPosition})}  
+                    >  
+                    <Picker.Item label="Bogotá" value="5f2c89bf7d918327a03f2167" />  
+                    <Picker.Item label="Cali" value="5f2c89cf7d918327a03f2168" />  
+                    <Picker.Item label="Medellín" value="5f2c89dd7d918327a03f2169" />  
+                    <Picker.Item label="Ciudad de México" value="5f2c8a837d918327a03f2172" /> 
+                    <Picker.Item label="Tijuana" value="5f2c8ab57d918327a03f2178" />  
+                    <Picker.Item label="Guadalajara" value="5f2c8a987d918327a03f2174" />  
+                    <Picker.Item label="La Paz" value="5f2c8adb7d918327a03f2179" />  
+                    <Picker.Item label="Sucre" value="5f2c8b267d918327a03f217c" /> 
+            </Picker> 
+            
+            <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={this.state.hijos}
+              onValueChange={(hijos) => this.setState({ hijos })}
+              style={styles.checkbox}
+             />
+              <Text style={styles.label}>¿Tienes hijos?</Text>
+              </View>
+
+              <View style={styles.checkboxContainer}>
+              <CheckBox
+              value={this.state.fumador}
+              onValueChange={(fumador) => this.setState({ fumador })}
+              style={styles.checkbox}
+             />
+              <Text style={styles.label}>¿Eres fumador?</Text>
+              </View>
+
+              <View style={styles.checkboxContainer}>
+              <CheckBox
+              value={this.state.bebedor}
+              onValueChange={(bebedor) => this.setState({ bebedor })}
+              style={styles.checkbox}
+             />
+              <Text style={styles.label}>¿Eres bebedor?</Text>
+              </View>
+
             <TouchableOpacity
               style={styles.button}
               onPress={this.onRegister.bind(this)}
             >
               <Text style={styles.buttonText}> Ingresar </Text>
             </TouchableOpacity>
-            <Text style ={{color:"#FFFCB8",fontSize: 17,  borderColor: "black"}}onPress={() => this.props.navigation.push("Iniciar sesión")}> ¿Ya tienes cuenta? Inicia sesión </Text>
-          </SafeAreaView>
+            <Text style ={{color:"#FFFCB8",fontSize: 17,  borderColor: "black", alignSelf: "center",}}onPress={() => this.props.navigation.push("Iniciar sesión")}> ¿Ya tienes cuenta? Inicia sesión </Text>
+            </ScrollView>
+             </SafeAreaView>
         </ImageBackground>
-        </ScrollView>
+        
       );
     }
   }
@@ -253,6 +307,7 @@ export default class Register extends React.Component {
       marginBottom: 10,
       borderWidth: 1,
       borderColor: "#FDF994",
+      alignSelf: "center",
     },
     buttonText: {
       fontSize: 20,
@@ -274,17 +329,25 @@ export default class Register extends React.Component {
     pickerStyle:{  
         height: 45,  
         width: 400,  
-        color: 'gray',  
+        color: 'black',  
         justifyContent: 'center', 
-        borderRadius: 10, 
+        borderRadius: 50, 
         backgroundColor: "#fff",
+        marginVertical:10
         
     }  ,
     checkbox: {
       alignSelf: "center",
+      borderColor: "white",
     },
     label: {
-      margin: 8,
+      margin: 6,
+      color: 'white', 
+      fontSize: 16,
+      fontWeight: 'bold',
     },
-
+    checkboxContainer: {
+      flexDirection: "row",
+      marginBottom: 20,
+    },
   });

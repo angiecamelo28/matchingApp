@@ -21,6 +21,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-calendars": "^1.315.0",
     "react-native-gesture-handler": "^1.7.0",
+    "react-native-paper": "^4.1.0",
     "react-native-screens": "^2.10.1",
     "react-native-vector-icons": "^7.0.0",
     "react-native-web": "~0.11.7"
