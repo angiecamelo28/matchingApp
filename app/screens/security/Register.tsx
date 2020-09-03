@@ -55,6 +55,7 @@ export default class Register extends React.Component {
       const o = this.state.ocupacion;
       const h = this.state.hijos;
       const fm = this.state.fumador;
+      const b = this.state.bebedor;
       const i= this.state.intereses;
       const pI = this.state.paisId;
       const cI= this.state.ciudadId;
@@ -69,14 +70,15 @@ export default class Register extends React.Component {
           nombre: n,
           correo: c,
           phone: p,
-          sexo: "Masculino",
+          sexo: s,
           fechaNacimiento: f,
           nivelEscolaridad: ne,
-          estadoCivil: "Soltero",
-          orientacionSexual: "Heterosexual",
+          estadoCivil: ec,
+          orientacionSexual: os,
           ocupacion:o,
           hijos: h,
           fumador: fm,
+          bebedor: b,
           intereses: i,
           paisId: pI,
           ciudadId: cI
@@ -152,8 +154,7 @@ export default class Register extends React.Component {
             />
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.sexo}  
-                        onValueChange={(itemValue, itemPosition) =>  
-                            this.setState({sexo: itemValue, choosenIndex: itemPosition})}  
+                        onValueChange={(sexo) =>  this.setState({sexo})}  
                     >  
                     <Picker.Item label="Masculino" value="Masculino" />  
                     <Picker.Item label="Femenino" value="Femenino" />  
@@ -169,8 +170,7 @@ export default class Register extends React.Component {
             />
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.nivelEscolaridad}  
-                        onValueChange={(itemValue, itemPosition) =>  
-                            this.setState({nivelEscolaridad: itemValue, choosenIndex: itemPosition})}  
+                        onValueChange={(nivelEscolaridad) =>  this.setState({nivelEscolaridad})} 
                     >  
                     <Picker.Item label="Educación Básica" value="Educación Básica" />  
                     <Picker.Item label="Educación Media" value="Educación Media" />  
@@ -178,8 +178,7 @@ export default class Register extends React.Component {
             </Picker>  
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.estadoCivil}  
-                        onValueChange={(itemValue, itemPosition) =>  
-                            this.setState({estadoCivil: itemValue, choosenIndex: itemPosition})}  
+                        onValueChange={(estadoCivil) =>  this.setState({estadoCivil})} 
                     >  
                     <Picker.Item label="Soltero" value="Soltero" />  
                     <Picker.Item label="Unión libre" value="Unión libre" />  
@@ -190,14 +189,12 @@ export default class Register extends React.Component {
             </Picker>  
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.orientacionSexual}  
-                        onValueChange={(itemValue, itemPosition) =>  
-                            this.setState({orientacionSexual: itemValue, choosenIndex: itemPosition})}  
+                        onValueChange={(orientacionSexual) =>  this.setState({orientacionSexual})}   
                     >  
                     <Picker.Item label="Heterosexual" value="Heterosexual" />  
                     <Picker.Item label="Homosexual" value="Homosexual" />  
                     <Picker.Item label="Bisexual" value="Bisexual" />  
             </Picker>  
-            
             <TextInput
               value={this.state.ocupacion}
               keyboardType="default"
@@ -209,18 +206,15 @@ export default class Register extends React.Component {
              
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.paisId}  
-                        onValueChange={(itemValue, itemPosition) =>  
-                            this.setState({paisId: itemValue, choosenIndex: itemPosition})}  
+                        onValueChange={(paisId) =>  this.setState({paisId})}
                     >  
                     <Picker.Item label="Colombia" value="5f2d9fb7271b3c1e88ba50f4" />  
                     <Picker.Item label="México" value="5f2f76f2c145453a883eee7b" />  
                     <Picker.Item label="Bolivia" value="5f2c869d7d918327a03f215b" />  
             </Picker> 
-
             <Picker style={styles.pickerStyle}  
                         selectedValue={this.state.ciudadId}  
-                        onValueChange={(itemValue, itemPosition) =>  
-                            this.setState({ciudadId: itemValue, choosenIndex: itemPosition})}  
+                        onValueChange={(ciudadId) =>  this.setState({ciudadId})}  
                     >  
                     <Picker.Item label="Bogotá" value="5f2c89bf7d918327a03f2167" />  
                     <Picker.Item label="Cali" value="5f2c89cf7d918327a03f2168" />  
@@ -231,7 +225,6 @@ export default class Register extends React.Component {
                     <Picker.Item label="La Paz" value="5f2c8adb7d918327a03f2179" />  
                     <Picker.Item label="Sucre" value="5f2c8b267d918327a03f217c" /> 
             </Picker> 
-            
             <View style={styles.checkboxContainer}>
             <CheckBox
               value={this.state.hijos}
