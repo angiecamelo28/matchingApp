@@ -62,8 +62,8 @@ export default class SessionNavbar extends React.Component {
         <View>
         <Appbar.Header style={{backgroundColor:'#760893', height: 60}}>
             <Appbar.Content title="Matching" subtitle={"Empieza ahora mismo!"}/>
+            <Appbar.Action icon="account" onPress={() => this.props.navigation.push("Contacto")} />
             <Appbar.Action icon="account-details" onPress={() => this.props.navigation.push("Registrate")} />
-            <Appbar.Action icon="account-details" onPress={() => this.props.navigation.push("Matchiing")} />
             <Appbar.Action icon="login" onPress={() => this.props.navigation.push("Iniciar sesión")} />
           </Appbar.Header>
           </View>

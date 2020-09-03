@@ -256,7 +256,7 @@ export default class Register extends React.Component {
               style={styles.button}
               onPress={this.onRegister.bind(this)}
             >
-              <Text style={styles.buttonText}> Ingresar </Text>
+              <Text style={styles.buttonText}> Regístrate </Text>
             </TouchableOpacity>
             <Text style ={{color:"#FFFCB8",fontSize: 17,  borderColor: "black", alignSelf: "center",}}onPress={() => this.props.navigation.push("Iniciar sesión")}> ¿Ya tienes cuenta? Inicia sesión </Text>
             </ScrollView>
